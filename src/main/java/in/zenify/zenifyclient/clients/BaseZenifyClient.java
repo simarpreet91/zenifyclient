@@ -21,6 +21,18 @@ public class BaseZenifyClient {
         this.apiUrl = apiUrl;
     }
 
+    public Response getList(String url) {
+        Response response = null;
+        try {
+            response = client.target(apiUrl + url).request(MediaType.APPLICATION_JSON).get();
+        }
+        catch (Exception e) {
+            logger.error(e.getMessage());
+            return Response.serverError().build();
+        }
+        return response;
+    }
+
     public Response get(String url, String id) {
         Response response = null;
         try {

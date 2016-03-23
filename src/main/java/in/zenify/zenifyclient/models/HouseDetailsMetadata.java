@@ -3,6 +3,7 @@ package in.zenify.zenifyclient.models;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -277,6 +278,8 @@ public class HouseDetailsMetadata {
 
     @JsonIgnore
     public   List<String> getFurnishingDescriptionList() {
+        if (furnishingDescription == null)
+            return new ArrayList<String>();
 
         String[] split = furnishingDescription.split("\r\n");
         return Arrays.asList(split);

@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import io.dropwizard.jackson.JsonSnakeCase;
 
 import javax.validation.constraints.NotNull;
+import javax.ws.rs.core.MultivaluedMap;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -39,9 +40,6 @@ public class HouseDetails {
     private HouseType houseType; //done
     private MainDoorDirection mainDoorFacingDirection; //done
 
-    private Integer propertyOnFloor; //done
-    private Integer floorsInProperty;
-
     private Integer numberOfCoveredCarParks; //done
     private Integer numberOfOpenCarParks; //done
 
@@ -75,6 +73,8 @@ public class HouseDetails {
     private String ownershipType;
     private String gasConnectionType;
     private Integer rentalBedrooms;
+    private Integer propertyOnFloor; //done
+    private Integer floorsInProperty;
 
     private String otherFurnishings;
 
@@ -144,7 +144,6 @@ public class HouseDetails {
         hd.hasTerrace = hasTerrace;
         hd.houseType = houseType;
         hd.mainDoorFacingDirection = mainDoorFacingDirection;
-//        hd.propertyOnFloor = propertyOnFloor;
         hd.numberOfCoveredCarParks = numberOfCoveredCarParks;
         hd.numberOfOpenCarParks = numberOfOpenCarParks;
         hd.furnishingCategory = furnishingCategory;
@@ -229,22 +228,6 @@ public class HouseDetails {
 
     public void setOtherFurnishings(String otherFurnishings) {
         this.otherFurnishings = otherFurnishings;
-    }
-
-    public Integer getPropertyOnFloor() {
-        return propertyOnFloor;
-    }
-
-    public void setPropertyOnFloor(Integer propertyOnFloor) {
-        this.propertyOnFloor = propertyOnFloor;
-    }
-
-    public Integer getFloorsInProperty() {
-        return floorsInProperty;
-    }
-
-    public void setFloorsInProperty(Integer floorsInProperty) {
-        this.floorsInProperty = floorsInProperty;
     }
 
     public void setPartiallyLocked(Boolean isPartiallyLocked) {
@@ -485,16 +468,6 @@ public class HouseDetails {
         return housingComplexName;
     }
 
-//    @JsonProperty
-//    public String getTenantTypeAllowed() {
-//        return tenantTypeAllowed;
-//    }
-//
-//    @JsonProperty
-//    public void setTenantTypeAllowed(String tenantTypeAllowed) {
-//        this.tenantTypeAllowed = tenantTypeAllowed;
-//    }
-
     public void setHousingComplexName(String housingComplexName) {
         this.housingComplexName = housingComplexName;
     }
@@ -628,6 +601,22 @@ public class HouseDetails {
         this.isCorporateLeaseAllowed = isCorporateLeaseAllowed;
     }
 
+    public Integer getPropertyOnFloor() {
+        return propertyOnFloor;
+    }
+
+    public void setPropertyOnFloor(Integer propertyOnFloor) {
+        this.propertyOnFloor = propertyOnFloor;
+    }
+
+    public Integer getFloorsInProperty() {
+        return floorsInProperty;
+    }
+
+    public void setFloorsInProperty(Integer floorsInProperty) {
+        this.floorsInProperty = floorsInProperty;
+    }
+
     public String getOwnershipType() {
         return ownershipType;
     }
@@ -635,16 +624,6 @@ public class HouseDetails {
     public void setOwnershipType(String ownershipType) {
         this.ownershipType = ownershipType;
     }
-
-    //    @JsonProperty
-//    public String getAddress() {
-//        return housingComplexName;
-//    }
-//
-//    @JsonProperty
-//    public void setHousingComplexName(String housingComplexName) {
-//        this.housingComplexName = housingComplexName;
-//    }
 
     public List<Restriction> getRestrictionsList() {
         List<Restriction> restrictions = new ArrayList<Restriction>();
@@ -670,6 +649,11 @@ public class HouseDetails {
             restrictions.add(new Restriction(true, "Vaastu compliant"));
 
         return restrictions;
+    }
+
+    @JsonIgnore
+    public boolean isVaastuCompliant(){
+        return (getMainDoorFacingDirection() != null && getMainDoorFacingDirection().equals(MainDoorDirection.EAST));
     }
 
     @Override
