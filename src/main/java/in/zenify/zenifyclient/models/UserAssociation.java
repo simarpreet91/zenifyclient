@@ -14,7 +14,8 @@ public class UserAssociation {
     public UserAssociation() {
     }
 
-    public UserAssociation(UserType userType, String userId, EntityType entityType, String entityId, UserRoleType role) {
+    public UserAssociation(String id, UserType userType, String userId, EntityType entityType, String entityId, UserRoleType role) {
+        this.id = id;
         this.userType = userType;
         this.userId = userId;
         this.entityType = entityType;
